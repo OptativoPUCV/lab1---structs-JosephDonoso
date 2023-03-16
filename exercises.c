@@ -13,7 +13,9 @@ Programe la función void swap(int *a, int *b), la cual
 intercambia los valores de las variables apuntadas por a y b.
 */
 void swap(int *a, int *b) {
-
+  int temp = *a;
+  *a = *b;
+  *b = temp;
 }
 
 /*
@@ -23,7 +25,14 @@ la cual encuentra el máximo y el mínimo valor del arreglo a y los
 almacena en las variables apuntadas por max y min.
 */
 void arrayMaxMin(int *a, int n, int *max, int *min) {
-    
+  *max = a[0];
+  *min = a[0];
+  for(int i = 0; i < n ; i++){
+    if(*max < a[i])
+      *max = a[i];
+    if(*min > a[i])
+      *min = a[i];
+  }
 }
 
 
@@ -42,11 +51,12 @@ typedef struct {
 
 
 Persona* crearPersona(char nombre[], char rut[], int edad) {
-   Persona * p = (Persona *) malloc(sizeof(Persona));
+  Persona * p = (Persona *) malloc(sizeof(Persona));
    //asignar valores de entrada a los campos de p
-
-
-   return p;
+  p->edad = edad;
+  strcpy(p->nombre, nombre);
+  strcpy(p->rut, rut);
+  return p;
 }
 
 /*
@@ -63,7 +73,10 @@ typedef struct {
 } Vector;
 
 Vector * crearVector(int n) {
-   return NULL;
+  Vector * vector = (Vector *) malloc(sizeof(Vector));
+  vector->datos = (int *) calloc(n, sizeof(int));
+  vector->capacidad = n;
+   return vector;
 }
 
 /*
@@ -72,7 +85,7 @@ Programe la función void asignarValor(Vector * v, int i, int valor),
 la cual asigna el valor a la posición i del vector v.
 */
 void asignarValor(Vector * v, int i, int valor) {
-
+  v->datos[i] = valor;
 }
 
 /*
@@ -81,7 +94,7 @@ Programe la función int obtenerValor(Vector * v, int i),
 la cual retorna el valor en la posición i del vector v.
 */
 int obtenerValor(Vector * v, int i) {
-   return 0;
+   return v->datos[i];
 }
 
 /*
@@ -90,7 +103,9 @@ Función que suma los vectores `a` y `b` y
 actualiza el vector `c` con el resultado de la suma.
 */
 void sumaV(Vector * a, Vector * b, Vector * c) {
-
+  for(int i = 0; i < a->capacidad; i++){
+    c->datos[i] = a->datos[i] + b->datos[i];
+  }
 }
 
 /*
@@ -99,5 +114,6 @@ Use las operaciones implementadas de vectores para
 sumar (a1,a2)+(b1+b2). Almacene el resultado en el vector c.
 */
 void sumaV2(int a1, int a2, int b1, int b2, Vector *c){
-
+  c->datos[0] = a1 + b1;
+  c->datos[1] = a2 + b2;
 }
